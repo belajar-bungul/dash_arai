@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ara_dashboard.BulletWidget">
+        <div class="ara-bullet-container" t-on-click="onClick">
+            <div class="ara-bullet-header">
+                <div class="ara-bullet-stat">
+                    <span class="ara-bullet-current"><t t-esc="data.formatted_current || '0'"/></span>
+                    <span class="ara-bullet-target">Target: <t t-esc="data.formatted_target || '0'"/></span>
+                </div>
+                <span class="ara-bullet-pct"><t t-esc="percentage"/>%</span>
+            </div>
+
+            <!-- Bullet Graph Track -->
+            <div class="ara-bullet-track-wrapper">
+                <!-- 3 Qualitative Zones -->
+                <div class="ara-bullet-band band-poor" style="width: 50%;" title="Poor (0-50%)"/>
+                <div class="ara-bullet-band band-satisfactory" style="width: 30%;" title="Satisfactory (50-80%)"/>
+                <div class="ara-bullet-band band-good" style="width: 20%;" title="Good (80-100%)"/>
+
+                <!-- Actual Value Bar -->
+                <div class="ara-bullet-measure-bar"
+                     t-attf-style="width: #{percentage}%; background: #{gradientStyle};"/>
+
+                <!-- Target Marker Line -->
+                <div class="ara-bullet-target-marker" style="left: 80%;" title="Target Benchmark"/>
+            </div>
+
+            <div class="ara-bullet-legend">
+                <span>0</span>
+                <span>50%</span>
+                <span style="font-weight: 700; color: #7B68EE;">Target 80%</span>
+                <span>100%</span>
+            </div>
+        </div>
+    </t>
+</templates>

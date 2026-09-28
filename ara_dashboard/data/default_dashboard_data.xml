@@ -1,0 +1,957 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- ====================================================================
+         1. DUMMY ENTERPRISE CLIENTS & VENDORS
+         ==================================================================== -->
+    <record id="demo_partner_corp_1" model="res.partner">
+        <field name="name">PT Nusantara Digital Solusindo</field>
+        <field name="is_company">True</field>
+        <field name="company_type">company</field>
+        <field name="email">contact@nusantaradigital.id</field>
+        <field name="phone">+62 21 555 0192</field>
+        <field name="city">Jakarta</field>
+        <field name="country_id" ref="base.id"/>
+    </record>
+
+    <record id="demo_partner_corp_2" model="res.partner">
+        <field name="name">Starlight Media Ventures Ltd</field>
+        <field name="is_company">True</field>
+        <field name="company_type">company</field>
+        <field name="email">info@starlightmedia.com</field>
+        <field name="phone">+65 6789 0123</field>
+        <field name="city">Singapore</field>
+        <field name="country_id" ref="base.sg"/>
+    </record>
+
+    <record id="demo_partner_corp_3" model="res.partner">
+        <field name="name">Apex Global Logistics Inc</field>
+        <field name="is_company">True</field>
+        <field name="company_type">company</field>
+        <field name="email">support@apexlogistics.us</field>
+        <field name="phone">+1 415 555 2671</field>
+        <field name="city">San Francisco</field>
+        <field name="country_id" ref="base.us"/>
+    </record>
+
+    <record id="demo_partner_corp_4" model="res.partner">
+        <field name="name">Tokyo Tech Robotics Corp</field>
+        <field name="is_company">True</field>
+        <field name="company_type">company</field>
+        <field name="email">business@tokyotech.jp</field>
+        <field name="phone">+81 3 5555 0144</field>
+        <field name="city">Tokyo</field>
+        <field name="country_id" ref="base.jp"/>
+    </record>
+
+    <!-- ====================================================================
+         2. DUMMY PRODUCTS FOR MANUFACTURING & SALES
+         ==================================================================== -->
+    <record id="demo_product_server" model="product.product">
+        <field name="name">Ara Enterprise Blade Server X9</field>
+        <field name="is_storable">True</field>
+        <field name="list_price">4500.0</field>
+        <field name="standard_price">2800.0</field>
+    </record>
+
+    <record id="demo_product_robot_arm" model="product.product">
+        <field name="name">Precision Robotic Arm v4</field>
+        <field name="is_storable">True</field>
+        <field name="list_price">8500.0</field>
+        <field name="standard_price">5200.0</field>
+    </record>
+
+    <!-- ====================================================================
+         3. DUMMY CRM LEADS
+         ==================================================================== -->
+    <record id="demo_crm_lead_1" model="crm.lead">
+        <field name="name">ERP Cloud Migration Project</field>
+        <field name="partner_id" ref="demo_partner_corp_1"/>
+        <field name="expected_revenue">45000.0</field>
+        <field name="probability">80.0</field>
+        <field name="type">opportunity</field>
+    </record>
+
+    <record id="demo_crm_lead_2" model="crm.lead">
+        <field name="name">AI Analytics Platform Implementation</field>
+        <field name="partner_id" ref="demo_partner_corp_2"/>
+        <field name="expected_revenue">68000.0</field>
+        <field name="probability">60.0</field>
+        <field name="type">opportunity</field>
+    </record>
+
+    <record id="demo_crm_lead_3" model="crm.lead">
+        <field name="name">Warehouse Automation System</field>
+        <field name="partner_id" ref="demo_partner_corp_3"/>
+        <field name="expected_revenue">32000.0</field>
+        <field name="probability">90.0</field>
+        <field name="type">opportunity</field>
+    </record>
+
+    <record id="demo_crm_lead_4" model="crm.lead">
+        <field name="name">Robotics Supply Chain Contract</field>
+        <field name="partner_id" ref="demo_partner_corp_4"/>
+        <field name="expected_revenue">95000.0</field>
+        <field name="probability">40.0</field>
+        <field name="type">opportunity</field>
+    </record>
+
+    <!-- ====================================================================
+         4. DUMMY SALES ORDERS
+         ==================================================================== -->
+    <record id="demo_sale_order_1" model="sale.order">
+        <field name="partner_id" ref="demo_partner_corp_1"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="demo_sale_order_line_1" model="sale.order.line">
+        <field name="order_id" ref="demo_sale_order_1"/>
+        <field name="product_id" ref="demo_product_server"/>
+        <field name="name">Enterprise Software License &amp; Blades</field>
+        <field name="price_unit">28500.0</field>
+        <field name="product_uom_qty">1</field>
+    </record>
+
+    <record id="demo_sale_order_2" model="sale.order">
+        <field name="partner_id" ref="demo_partner_corp_2"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="demo_sale_order_line_2" model="sale.order.line">
+        <field name="order_id" ref="demo_sale_order_2"/>
+        <field name="product_id" ref="demo_product_server"/>
+        <field name="name">Digital Media Cloud Infrastructure</field>
+        <field name="price_unit">42000.0</field>
+        <field name="product_uom_qty">1</field>
+    </record>
+
+    <record id="demo_sale_order_3" model="sale.order">
+        <field name="partner_id" ref="demo_partner_corp_3"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="demo_sale_order_line_3" model="sale.order.line">
+        <field name="order_id" ref="demo_sale_order_3"/>
+        <field name="product_id" ref="demo_product_robot_arm"/>
+        <field name="name">Global Logistics Automation Suite</field>
+        <field name="price_unit">31500.0</field>
+        <field name="product_uom_qty">1</field>
+    </record>
+
+    <record id="demo_sale_order_4" model="sale.order">
+        <field name="partner_id" ref="demo_partner_corp_4"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="demo_sale_order_line_4" model="sale.order.line">
+        <field name="order_id" ref="demo_sale_order_4"/>
+        <field name="product_id" ref="demo_product_robot_arm"/>
+        <field name="name">AI Robotics Controller Suite</field>
+        <field name="price_unit">65000.0</field>
+        <field name="product_uom_qty">1</field>
+    </record>
+
+    <!-- ====================================================================
+         5. DUMMY MANUFACTURING ORDERS (MRP)
+         ==================================================================== -->
+    <record id="demo_mrp_production_1" model="mrp.production">
+        <field name="product_id" ref="demo_product_server"/>
+        <field name="product_qty">15</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="state">confirmed</field>
+    </record>
+
+    <record id="demo_mrp_production_2" model="mrp.production">
+        <field name="product_id" ref="demo_product_robot_arm"/>
+        <field name="product_qty">8</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="state">progress</field>
+    </record>
+
+    <record id="demo_mrp_production_3" model="mrp.production">
+        <field name="product_id" ref="demo_product_server"/>
+        <field name="product_qty">25</field>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
+        <field name="state">to_close</field>
+    </record>
+
+    <!-- ====================================================================
+         6. DUMMY PURCHASE ORDERS
+         ==================================================================== -->
+    <record id="demo_purchase_order_1" model="purchase.order">
+        <field name="partner_id" ref="demo_partner_corp_4"/>
+        <field name="state">purchase</field>
+    </record>
+    <record id="demo_purchase_order_line_1" model="purchase.order.line">
+        <field name="order_id" ref="demo_purchase_order_1"/>
+        <field name="product_id" ref="demo_product_server"/>
+        <field name="name">Raw Components &amp; Processors</field>
+        <field name="price_unit">18500.0</field>
+        <field name="product_qty">2</field>
+    </record>
+
+    <record id="demo_purchase_order_2" model="purchase.order">
+        <field name="partner_id" ref="demo_partner_corp_3"/>
+        <field name="state">purchase</field>
+    </record>
+    <record id="demo_purchase_order_line_2" model="purchase.order.line">
+        <field name="order_id" ref="demo_purchase_order_2"/>
+        <field name="product_id" ref="demo_product_robot_arm"/>
+        <field name="name">Hydraulic Joints &amp; Actuators</field>
+        <field name="price_unit">14200.0</field>
+        <field name="product_qty">3</field>
+    </record>
+
+    <!-- ====================================================================
+         DASHBOARD 1: EXECUTIVE BUSINESS HUB (All-In-One CEO Cockpit)
+         ==================================================================== -->
+    <record id="demo_ara_dashboard_executive" model="ara.dashboard">
+        <field name="name">Executive Business Hub</field>
+        <field name="sequence">1</field>
+        <field name="description">All-in-one Executive Cockpit covering Sales, CRM, Finance, and Operations.</field>
+        <field name="refresh_interval">0</field>
+        <field name="date_filter_default">all</field>
+        <field name="share_scope">everyone</field>
+    </record>
+
+    <record id="demo_widget_exec_revenue" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_executive"/>
+        <field name="name">Total Confirmed Revenue</field>
+        <field name="sequence">1</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="date_field_id" ref="sale.field_sale_order__date_order"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="domain">[('state', 'in', ['sale', 'done'])]</field>
+        <field name="kpi_icon">fa-dollar-sign</field>
+        <field name="color_accent">purple</field>
+        <field name="trend_comparison">prev_period</field>
+    </record>
+
+    <record id="demo_widget_exec_leads" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_executive"/>
+        <field name="name">CRM Pipeline Expected</field>
+        <field name="sequence">2</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="date_field_id" ref="crm.field_crm_lead__create_date"/>
+        <field name="measure_field_id" ref="crm.field_crm_lead__expected_revenue"/>
+        <field name="aggregation_type">sum</field>
+        <field name="kpi_icon">fa-funnel-dollar</field>
+        <field name="color_accent">cyan</field>
+        <field name="trend_comparison">prev_period</field>
+    </record>
+
+    <record id="demo_widget_exec_target" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_executive"/>
+        <field name="name">Annual Revenue Target $200K</field>
+        <field name="sequence">3</field>
+        <field name="widget_type">progress</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="date_field_id" ref="sale.field_sale_order__date_order"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="target_value">200000.0</field>
+        <field name="kpi_icon">fa-bullseye</field>
+        <field name="color_accent">emerald</field>
+    </record>
+
+    <record id="demo_widget_exec_sales_chart" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_executive"/>
+        <field name="name">Revenue by Customer</field>
+        <field name="sequence">4</field>
+        <field name="widget_type">chart</field>
+        <field name="chart_type">bar</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="date_field_id" ref="sale.field_sale_order__date_order"/>
+        <field name="groupby_field_id" ref="sale.field_sale_order__partner_id"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="color_accent">purple</field>
+        <field name="limit">6</field>
+    </record>
+
+    <record id="demo_widget_exec_lead_breakdown" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_executive"/>
+        <field name="name">Pipeline by Stage</field>
+        <field name="sequence">5</field>
+        <field name="widget_type">chart</field>
+        <field name="chart_type">doughnut</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="date_field_id" ref="crm.field_crm_lead__create_date"/>
+        <field name="groupby_field_id" ref="crm.field_crm_lead__stage_id"/>
+        <field name="measure_field_id" ref="crm.field_crm_lead__expected_revenue"/>
+        <field name="aggregation_type">sum</field>
+        <field name="color_accent">purple</field>
+        <field name="limit">6</field>
+    </record>
+
+    <record id="demo_widget_exec_recent_orders" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_executive"/>
+        <field name="name">Recent Confirmed Sales Orders</field>
+        <field name="sequence">6</field>
+        <field name="widget_type">table</field>
+        <field name="col_span">12</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="date_field_id" ref="sale.field_sale_order__date_order"/>
+        <field name="table_field_ids" eval="[(6, 0, [
+            ref('sale.field_sale_order__name'),
+            ref('sale.field_sale_order__partner_id'),
+            ref('sale.field_sale_order__date_order'),
+            ref('sale.field_sale_order__amount_total'),
+            ref('sale.field_sale_order__state'),
+        ])]"/>
+        <field name="limit">8</field>
+        <field name="sort_order">desc</field>
+    </record>
+
+    <!-- ====================================================================
+         DASHBOARD 2: SALES & REVENUE HUB
+         ==================================================================== -->
+    <record id="demo_ara_dashboard_sales" model="ara.dashboard">
+        <field name="name">Sales &amp; Orders Hub</field>
+        <field name="sequence">2</field>
+        <field name="description">Dedicated Sales performance metrics, quotation tracking, and client order value.</field>
+        <field name="refresh_interval">30</field>
+        <field name="date_filter_default">all</field>
+        <field name="share_scope">everyone</field>
+    </record>
+
+    <record id="demo_widget_sales_total_rev" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_sales"/>
+        <field name="name">Gross Sales Revenue</field>
+        <field name="sequence">1</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="date_field_id" ref="sale.field_sale_order__date_order"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="kpi_icon">fa-wallet</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <record id="demo_widget_sales_orders_count" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_sales"/>
+        <field name="name">Total Confirmed Orders</field>
+        <field name="sequence">2</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="date_field_id" ref="sale.field_sale_order__date_order"/>
+        <field name="aggregation_type">count</field>
+        <field name="kpi_icon">fa-shopping-cart</field>
+        <field name="color_accent">cyan</field>
+    </record>
+
+    <record id="demo_widget_sales_target" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_sales"/>
+        <field name="name">Quarterly Target $150K</field>
+        <field name="sequence">3</field>
+        <field name="widget_type">progress</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="date_field_id" ref="sale.field_sale_order__date_order"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="target_value">150000.0</field>
+        <field name="kpi_icon">fa-chart-line</field>
+        <field name="color_accent">emerald</field>
+    </record>
+
+    <record id="demo_widget_sales_bar_chart" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_sales"/>
+        <field name="name">Order Values by Client</field>
+        <field name="sequence">4</field>
+        <field name="widget_type">chart</field>
+        <field name="chart_type">bar</field>
+        <field name="col_span">12</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="date_field_id" ref="sale.field_sale_order__date_order"/>
+        <field name="groupby_field_id" ref="sale.field_sale_order__partner_id"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <!-- ====================================================================
+         DASHBOARD 3: CRM & PIPELINE HUB
+         ==================================================================== -->
+    <record id="demo_ara_dashboard_crm" model="ara.dashboard">
+        <field name="name">CRM &amp; Pipeline Hub</field>
+        <field name="sequence">3</field>
+        <field name="description">Lead generation metrics, deal conversion rate, and pipeline value.</field>
+        <field name="refresh_interval">0</field>
+        <field name="date_filter_default">all</field>
+        <field name="share_scope">everyone</field>
+    </record>
+
+    <record id="demo_widget_crm_leads_count" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_crm"/>
+        <field name="name">Total Active Opportunities</field>
+        <field name="sequence">1</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="date_field_id" ref="crm.field_crm_lead__create_date"/>
+        <field name="aggregation_type">count</field>
+        <field name="kpi_icon">fa-filter</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <record id="demo_widget_crm_expected_val" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_crm"/>
+        <field name="name">Pipeline Expected Revenue</field>
+        <field name="sequence">2</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="date_field_id" ref="crm.field_crm_lead__create_date"/>
+        <field name="measure_field_id" ref="crm.field_crm_lead__expected_revenue"/>
+        <field name="aggregation_type">sum</field>
+        <field name="kpi_icon">fa-money-bill-wave</field>
+        <field name="color_accent">emerald</field>
+    </record>
+
+    <record id="demo_widget_crm_target_leads" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_crm"/>
+        <field name="name">Quarterly Deal Target (10 Deals)</field>
+        <field name="sequence">3</field>
+        <field name="widget_type">progress</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="date_field_id" ref="crm.field_crm_lead__create_date"/>
+        <field name="aggregation_type">count</field>
+        <field name="target_value">10.0</field>
+        <field name="kpi_icon">fa-bullseye</field>
+        <field name="color_accent">cyan</field>
+    </record>
+
+    <record id="demo_widget_crm_table" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_crm"/>
+        <field name="name">Top Open Opportunities</field>
+        <field name="sequence">4</field>
+        <field name="widget_type">table</field>
+        <field name="col_span">12</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="date_field_id" ref="crm.field_crm_lead__create_date"/>
+        <field name="table_field_ids" eval="[(6, 0, [
+            ref('crm.field_crm_lead__name'),
+            ref('crm.field_crm_lead__partner_id'),
+            ref('crm.field_crm_lead__expected_revenue'),
+            ref('crm.field_crm_lead__probability'),
+            ref('crm.field_crm_lead__stage_id'),
+        ])]"/>
+        <field name="limit">8</field>
+    </record>
+
+    <!-- ====================================================================
+         DASHBOARD 4: MANUFACTURING (MRP) PRODUCTION HUB
+         ==================================================================== -->
+    <record id="demo_ara_dashboard_mrp" model="ara.dashboard">
+        <field name="name">Manufacturing &amp; MRP Hub</field>
+        <field name="sequence">4</field>
+        <field name="description">Live shop floor production orders, completed batches, and capacity utilization.</field>
+        <field name="refresh_interval">10</field>
+        <field name="date_filter_default">all</field>
+        <field name="share_scope">everyone</field>
+    </record>
+
+    <record id="demo_widget_mrp_total_orders" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_mrp"/>
+        <field name="name">Total Manufacturing Orders</field>
+        <field name="sequence">1</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="date_field_id" ref="mrp.field_mrp_production__date_start"/>
+        <field name="aggregation_type">count</field>
+        <field name="kpi_icon">fa-cogs</field>
+        <field name="color_accent">amber</field>
+    </record>
+
+    <record id="demo_widget_mrp_total_qty" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_mrp"/>
+        <field name="name">Total Planned Units</field>
+        <field name="sequence">2</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="date_field_id" ref="mrp.field_mrp_production__date_start"/>
+        <field name="measure_field_id" ref="mrp.field_mrp_production__product_qty"/>
+        <field name="aggregation_type">sum</field>
+        <field name="kpi_icon">fa-boxes</field>
+        <field name="color_accent">emerald</field>
+    </record>
+
+    <record id="demo_widget_mrp_target_output" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_mrp"/>
+        <field name="name">Monthly Output Target (50 Units)</field>
+        <field name="sequence">3</field>
+        <field name="widget_type">progress</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="date_field_id" ref="mrp.field_mrp_production__date_start"/>
+        <field name="measure_field_id" ref="mrp.field_mrp_production__product_qty"/>
+        <field name="aggregation_type">sum</field>
+        <field name="target_value">50.0</field>
+        <field name="kpi_icon">fa-industry</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <record id="demo_widget_mrp_status_chart" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_mrp"/>
+        <field name="name">Production Orders by State</field>
+        <field name="sequence">4</field>
+        <field name="widget_type">chart</field>
+        <field name="chart_type">doughnut</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="date_field_id" ref="mrp.field_mrp_production__date_start"/>
+        <field name="groupby_field_id" ref="mrp.field_mrp_production__state"/>
+        <field name="aggregation_type">count</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <record id="demo_widget_mrp_product_chart" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_mrp"/>
+        <field name="name">Batch Output by Product</field>
+        <field name="sequence">5</field>
+        <field name="widget_type">chart</field>
+        <field name="chart_type">bar</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="date_field_id" ref="mrp.field_mrp_production__date_start"/>
+        <field name="groupby_field_id" ref="mrp.field_mrp_production__product_id"/>
+        <field name="measure_field_id" ref="mrp.field_mrp_production__product_qty"/>
+        <field name="aggregation_type">sum</field>
+        <field name="color_accent">cyan</field>
+    </record>
+
+    <record id="demo_widget_mrp_table" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_mrp"/>
+        <field name="name">Live Manufacturing Orders</field>
+        <field name="sequence">6</field>
+        <field name="widget_type">table</field>
+        <field name="col_span">12</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="date_field_id" ref="mrp.field_mrp_production__date_start"/>
+        <field name="table_field_ids" eval="[(6, 0, [
+            ref('mrp.field_mrp_production__name'),
+            ref('mrp.field_mrp_production__product_id'),
+            ref('mrp.field_mrp_production__product_qty'),
+            ref('mrp.field_mrp_production__date_start'),
+            ref('mrp.field_mrp_production__state'),
+        ])]"/>
+        <field name="limit">8</field>
+    </record>
+
+    <!-- ====================================================================
+         DASHBOARD 5: INVENTORY & WAREHOUSE HUB
+         ==================================================================== -->
+    <record id="demo_ara_dashboard_stock" model="ara.dashboard">
+        <field name="name">Inventory &amp; Warehouse Hub</field>
+        <field name="sequence">5</field>
+        <field name="description">Fulfillment status, pending delivery orders, receipts, and internal transfers.</field>
+        <field name="refresh_interval">30</field>
+        <field name="date_filter_default">all</field>
+        <field name="share_scope">everyone</field>
+    </record>
+
+    <record id="demo_widget_stock_total_pickings" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_stock"/>
+        <field name="name">Total Stock Operations</field>
+        <field name="sequence">1</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="date_field_id" ref="stock.field_stock_picking__scheduled_date"/>
+        <field name="aggregation_type">count</field>
+        <field name="kpi_icon">fa-truck-loading</field>
+        <field name="color_accent">blue</field>
+    </record>
+
+    <record id="demo_widget_stock_ready" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_stock"/>
+        <field name="name">Ready for Dispatch</field>
+        <field name="sequence">2</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="date_field_id" ref="stock.field_stock_picking__scheduled_date"/>
+        <field name="domain">[('state', '=', 'assigned')]</field>
+        <field name="aggregation_type">count</field>
+        <field name="kpi_icon">fa-check-circle</field>
+        <field name="color_accent">emerald</field>
+    </record>
+
+    <record id="demo_widget_stock_target" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_stock"/>
+        <field name="name">Monthly Transfer Target (30 Moves)</field>
+        <field name="sequence">3</field>
+        <field name="widget_type">progress</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="date_field_id" ref="stock.field_stock_picking__scheduled_date"/>
+        <field name="aggregation_type">count</field>
+        <field name="target_value">30.0</field>
+        <field name="kpi_icon">fa-warehouse</field>
+        <field name="color_accent">amber</field>
+    </record>
+
+    <record id="demo_widget_stock_by_type" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_stock"/>
+        <field name="name">Operations by Type</field>
+        <field name="sequence">4</field>
+        <field name="widget_type">chart</field>
+        <field name="chart_type">bar</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="date_field_id" ref="stock.field_stock_picking__scheduled_date"/>
+        <field name="groupby_field_id" ref="stock.field_stock_picking__picking_type_id"/>
+        <field name="aggregation_type">count</field>
+        <field name="color_accent">cyan</field>
+    </record>
+
+    <record id="demo_widget_stock_by_state" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_stock"/>
+        <field name="name">Status Distribution</field>
+        <field name="sequence">5</field>
+        <field name="widget_type">chart</field>
+        <field name="chart_type">doughnut</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="date_field_id" ref="stock.field_stock_picking__scheduled_date"/>
+        <field name="groupby_field_id" ref="stock.field_stock_picking__state"/>
+        <field name="aggregation_type">count</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <!-- ====================================================================
+         DASHBOARD 6: PURCHASE & PROCUREMENT HUB
+         ==================================================================== -->
+    <record id="demo_ara_dashboard_purchase" model="ara.dashboard">
+        <field name="name">Purchase &amp; Procurement Hub</field>
+        <field name="sequence">6</field>
+        <field name="description">Vendor expenditure, confirmed purchase orders, and procurement volume.</field>
+        <field name="refresh_interval">0</field>
+        <field name="date_filter_default">all</field>
+        <field name="share_scope">everyone</field>
+    </record>
+
+    <record id="demo_widget_purchase_spend" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_purchase"/>
+        <field name="name">Total Vendor Spend</field>
+        <field name="sequence">1</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="date_field_id" ref="purchase.field_purchase_order__date_order"/>
+        <field name="measure_field_id" ref="purchase.field_purchase_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="kpi_icon">fa-file-invoice-dollar</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <record id="demo_widget_purchase_orders_count" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_purchase"/>
+        <field name="name">Purchase Orders Count</field>
+        <field name="sequence">2</field>
+        <field name="widget_type">kpi</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="date_field_id" ref="purchase.field_purchase_order__date_order"/>
+        <field name="aggregation_type">count</field>
+        <field name="kpi_icon">fa-receipt</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <record id="demo_widget_purchase_budget" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_purchase"/>
+        <field name="name">Procurement Budget $100K</field>
+        <field name="sequence">3</field>
+        <field name="widget_type">progress</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="date_field_id" ref="purchase.field_purchase_order__date_order"/>
+        <field name="measure_field_id" ref="purchase.field_purchase_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="target_value">100000.0</field>
+        <field name="kpi_icon">fa-hand-holding-usd</field>
+        <field name="color_accent">emerald</field>
+    </record>
+
+    <record id="demo_widget_purchase_by_vendor" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_purchase"/>
+        <field name="name">Spend by Supplier</field>
+        <field name="sequence">4</field>
+        <field name="widget_type">chart</field>
+        <field name="chart_type">bar</field>
+        <field name="col_span">12</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="date_field_id" ref="purchase.field_purchase_order__date_order"/>
+        <field name="groupby_field_id" ref="purchase.field_purchase_order__partner_id"/>
+        <field name="measure_field_id" ref="purchase.field_purchase_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <!-- ====================================================================
+         SCHEDULED REPORT DEMO RECORD (Sales Executive, Monday 08:00)
+         ==================================================================== -->
+    <record id="demo_schedule_sales_executive_weekly" model="ara.dashboard.report.schedule">
+        <field name="name">Weekly Sales Executive Dashboard Briefing</field>
+        <field name="dashboard_id" ref="demo_ara_dashboard_sales"/>
+        <field name="schedule_interval">weekly</field>
+        <field name="day_of_week">0</field>
+        <field name="schedule_time">08:00</field>
+        <field name="date_filter">this_week</field>
+        <field name="report_format">all</field>
+        <field name="recipient_emails">sales@company.com, manager@company.com</field>
+        <field name="subject">📊 Weekly Sales Dashboard - Executive Summary</field>
+        <field name="include_kpis">True</field>
+        <field name="include_charts">True</field>
+        <field name="include_tables">True</field>
+        <field name="include_insights">True</field>
+        <field name="state">active</field>
+    </record>
+
+    <!-- ====================================================================
+         7. COMPREHENSIVE CHARTS & WIDGETS SHOWCASE DASHBOARD (ALL 15 TYPES)
+         ==================================================================== -->
+    <record id="demo_ara_dashboard_showcase" model="ara.dashboard">
+        <field name="name">All Charts &amp; Widgets Showcase</field>
+        <field name="description">Comprehensive Commercial Showcase Featuring All 15 Executive Chart &amp; Widget Formats</field>
+        <field name="refresh_interval">0</field>
+        <field name="presentation_interval">10</field>
+        <field name="tv_mode_enabled">True</field>
+        <field name="date_filter_default">all</field>
+        <field name="share_scope">everyone</field>
+        <field name="share_permission">manage</field>
+    </record>
+
+    <!-- 1. Tiles (KPI Metric Card) -->
+    <record id="demo_widget_showcase_tiles" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Executive Revenue Tiles</field>
+        <field name="sequence">1</field>
+        <field name="widget_type">tiles</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="target_value">250000.0</field>
+        <field name="kpi_icon">fa-money</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <!-- 2. Radial Chart (Gauge Dial) -->
+    <record id="demo_widget_showcase_radial" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Target Achievement Radial Dial</field>
+        <field name="sequence">2</field>
+        <field name="widget_type">radial</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="target_value">300000.0</field>
+        <field name="color_accent">emerald</field>
+    </record>
+
+    <!-- 3. Bullet Chart (Executive Benchmark Graph) -->
+    <record id="demo_widget_showcase_bullet" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Margin Performance Bullet Chart</field>
+        <field name="sequence">3</field>
+        <field name="widget_type">bullet</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="target_value">200000.0</field>
+        <field name="color_accent">cyan</field>
+    </record>
+
+    <!-- 4. Line Chart -->
+    <record id="demo_widget_showcase_line" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Revenue Trajectory Line Chart</field>
+        <field name="sequence">4</field>
+        <field name="widget_type">line</field>
+        <field name="chart_type">line</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="date_field_id" ref="sale.field_sale_order__date_order"/>
+        <field name="groupby_field_id" ref="sale.field_sale_order__date_order"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <!-- 5. Bar Chart -->
+    <record id="demo_widget_showcase_bar" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Sales Performance Bar Chart</field>
+        <field name="sequence">5</field>
+        <field name="widget_type">bar</field>
+        <field name="chart_type">bar</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="groupby_field_id" ref="sale.field_sale_order__user_id"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="color_accent">amber</field>
+    </record>
+
+    <!-- 6. Horizontal Bar Chart -->
+    <record id="demo_widget_showcase_horiz_bar" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Top Accounts Horizontal Bar Chart</field>
+        <field name="sequence">6</field>
+        <field name="widget_type">horizontal_bar</field>
+        <field name="chart_type">horizontal_bar</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="groupby_field_id" ref="sale.field_sale_order__partner_id"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="limit">5</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <!-- 7. Funnel Chart -->
+    <record id="demo_widget_showcase_funnel" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Sales Pipeline Funnel Chart</field>
+        <field name="sequence">7</field>
+        <field name="widget_type">funnel</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="groupby_field_id" ref="crm.field_crm_lead__stage_id"/>
+        <field name="measure_field_id" ref="crm.field_crm_lead__expected_revenue"/>
+        <field name="aggregation_type">sum</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <!-- 8. Pie Chart -->
+    <record id="demo_widget_showcase_pie" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Market Segmentation Pie Chart</field>
+        <field name="sequence">8</field>
+        <field name="widget_type">pie</field>
+        <field name="chart_type">pie</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="groupby_field_id" ref="crm.field_crm_lead__stage_id"/>
+        <field name="measure_field_id" ref="crm.field_crm_lead__expected_revenue"/>
+        <field name="aggregation_type">sum</field>
+        <field name="color_accent">emerald</field>
+    </record>
+
+    <!-- 9. Doughnut Chart -->
+    <record id="demo_widget_showcase_doughnut" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Order Status Doughnut Chart</field>
+        <field name="sequence">9</field>
+        <field name="widget_type">doughnut</field>
+        <field name="chart_type">doughnut</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="groupby_field_id" ref="sale.field_sale_order__state"/>
+        <field name="aggregation_type">count</field>
+        <field name="color_accent">cyan</field>
+    </record>
+
+    <!-- 10. Polar Area Chart -->
+    <record id="demo_widget_showcase_polar" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Territory Yield Polar Area Chart</field>
+        <field name="sequence">10</field>
+        <field name="widget_type">polar_area</field>
+        <field name="chart_type">polar_area</field>
+        <field name="col_span">4</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="groupby_field_id" ref="crm.field_crm_lead__country_id"/>
+        <field name="measure_field_id" ref="crm.field_crm_lead__expected_revenue"/>
+        <field name="aggregation_type">sum</field>
+        <field name="color_accent">blue</field>
+    </record>
+
+    <!-- 11. Radar Chart -->
+    <record id="demo_widget_showcase_radar" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Operational Excellence Radar Chart</field>
+        <field name="sequence">11</field>
+        <field name="widget_type">radar</field>
+        <field name="chart_type">radar</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="groupby_field_id" ref="sale.field_sale_order__partner_id"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="limit">6</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <!-- 12. Scatter Chart -->
+    <record id="demo_widget_showcase_scatter" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Deal Size vs Win Probability (Scatter)</field>
+        <field name="sequence">12</field>
+        <field name="widget_type">scatter</field>
+        <field name="chart_type">scatter</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="scatter_x_field_id" ref="crm.field_crm_lead__probability"/>
+        <field name="measure_field_id" ref="crm.field_crm_lead__expected_revenue"/>
+        <field name="limit">20</field>
+        <field name="color_accent">emerald</field>
+    </record>
+
+    <!-- 13. Flower Chart -->
+    <record id="demo_widget_showcase_flower" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Multi-Division Flower Chart</field>
+        <field name="sequence">13</field>
+        <field name="widget_type">flower</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="groupby_field_id" ref="sale.field_sale_order__partner_id"/>
+        <field name="measure_field_id" ref="sale.field_sale_order__amount_total"/>
+        <field name="aggregation_type">sum</field>
+        <field name="limit">6</field>
+        <field name="color_accent">purple</field>
+    </record>
+
+    <!-- 14. To-do Item -->
+    <record id="demo_widget_showcase_todo" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Executive Priority Checklist (To-do)</field>
+        <field name="sequence">14</field>
+        <field name="widget_type">todo</field>
+        <field name="col_span">6</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="config_json">[
+            {"id": 1, "title": "Review Q3 Revenue Projections", "subtitle": "Due: Today", "done": true, "badge": "High"},
+            {"id": 2, "title": "Approve Enterprise Vendor Contracts", "subtitle": "Due: Tomorrow", "done": false, "badge": "Finance"},
+            {"id": 3, "title": "Audit Warehouse Stock Movement", "subtitle": "Due: In 2 Days", "done": false, "badge": "Operations"},
+            {"id": 4, "title": "Reconcile Bank Statements", "subtitle": "Due: In 3 Days", "done": false, "badge": "Treasury"}
+        ]</field>
+        <field name="color_accent">emerald</field>
+    </record>
+
+    <!-- 15. List View (Table) -->
+    <record id="demo_widget_showcase_table" model="ara.dashboard.widget">
+        <field name="dashboard_id" ref="demo_ara_dashboard_showcase"/>
+        <field name="name">Top Enterprise Orders Registry (List View)</field>
+        <field name="sequence">15</field>
+        <field name="widget_type">table</field>
+        <field name="col_span">12</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="limit">6</field>
+        <field name="sort_order">desc</field>
+        <field name="color_accent">purple</field>
+    </record>
+</odoo>

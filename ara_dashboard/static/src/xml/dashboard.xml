@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ara_dashboard.MainDashboard">
+        <div t-attf-class="o_action ara-dashboard-action #{state.isTvMode ? 'ara-tv-wallboard' : ''}">
+            <div class="ara-dashboard-view">
+                
+                <!-- =========================================================
+                     1. TV / WALLBOARD TELEMETRY HEADER & LIVE STATUS (TV Mode)
+                     ========================================================= -->
+                <t t-if="state.isTvMode">
+                    <div class="ara-tv-header-bar">
+                        <div class="ara-tv-brand-area">
+                            <div class="ara-brand-emblem-badge">
+                                <svg class="ara-brand-svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <defs>
+                                        <linearGradient id="cuTvGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#7B68EE"/>
+                                            <stop offset="50%" stop-color="#B721FF"/>
+                                            <stop offset="100%" stop-color="#00D084"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M4 14.5L12 7.5L20 14.5" stroke="url(#cuTvGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 19.5L12 15L17 19.5" stroke="url(#cuTvGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+                                </svg>
+                                <span class="ara-brand-title">ARA</span>
+                            </div>
+                            <span class="ara-tv-title">OPERATIONS WALLBOARD 📺</span>
+                            <span class="ara-tv-live-beacon">
+                                <span class="beacon-dot"/> LIVE TELEMETRY
+                            </span>
+                        </div>
+
+                        <div class="ara-tv-clock-area">
+                            <i class="fa fa-clock-o"/>
+                            <span class="ara-tv-clock-digits" t-ref="liveClock">00:00:00</span>
+                        </div>
+
+                        <div class="ara-tv-actions">
+                            <button class="ara-btn-tv-exit" t-on-click="exitTvMode">
+                                <i class="fa fa-compress"/> Exit TV Mode (ESC)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Warehouse Live Telemetry Banner Strip -->
+                    <div class="ara-tv-telemetry-banner">
+                        <div class="ara-tv-telemetry-title">
+                            <i class="fa fa-cubes"/> WAREHOUSE LIVE OPERATIONS
+                        </div>
+                        <div class="ara-tv-telemetry-stats">
+                            <div class="ara-tv-stat-cell">
+                                <span class="stat-lbl">Orders Today</span>
+                                <span class="stat-val">842</span>
+                            </div>
+                            <div class="ara-tv-stat-cell">
+                                <span class="stat-lbl">Pending</span>
+                                <span class="stat-val stat-pending">43</span>
+                            </div>
+                            <div class="ara-tv-stat-cell">
+                                <span class="stat-lbl">Completed</span>
+                                <span class="stat-val stat-completed">799</span>
+                            </div>
+                            <div class="ara-tv-stat-cell">
+                                <span class="stat-lbl">Stock Alert</span>
+                                <span class="stat-val stat-alert">12</span>
+                            </div>
+                            <div class="ara-tv-stat-cell ara-tv-performance-cell">
+                                <div class="perf-meta">
+                                    <span class="stat-lbl">Picking Performance</span>
+                                    <span class="perf-pct">91%</span>
+                                </div>
+                                <div class="perf-bar-track">
+                                    <div class="perf-bar-fill" style="width: 91%;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- =========================================================
+                     2. STANDARD HEADER TOOLBAR (ClickUp 3.0 Clean ERP Hub)
+                     ========================================================= -->
+                <div class="ara-dashboard-header" t-if="!state.isTvMode">
+                    <div class="ara-dashboard-title-area">
+                        <!-- ClickUp-Style Glowing Emblem & Logo -->
+                        <div class="ara-brand-emblem-badge">
+                            <svg class="ara-brand-svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <defs>
+                                    <linearGradient id="cuMainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#7B68EE"/>
+                                        <stop offset="50%" stop-color="#B721FF"/>
+                                        <stop offset="100%" stop-color="#49CCF9"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M4 14.5L12 7.5L20 14.5" stroke="url(#cuMainGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 19.5L12 15L17 19.5" stroke="url(#cuMainGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+                            </svg>
+                            <span class="ara-brand-title">ARA</span>
+                        </div>
+                        
+                        <!-- Favorite Toggle Star Button -->
+                        <button t-if="state.dashboard" 
+                                t-attf-class="ara-btn-icon ara-btn-fav #{state.dashboard.is_favorite ? 'is-fav' : ''}" 
+                                title="Toggle Bookmark / Favorite Dashboard" 
+                                t-on-click="toggleFavorite">
+                            <i t-attf-class="fa #{state.dashboard.is_favorite ? 'fa-star' : 'fa-star-o'}"/>
+                        </button>
+
+                        <t t-if="state.availableDashboards.length > 1">
+                            <select class="ara-dashboard-select" t-on-change="onDashboardChange">
+                                <t t-foreach="state.availableDashboards" t-as="d" t-key="d.id">
+                                    <option t-att-value="d.id" t-att-selected="d.id === state.activeDashboardId">
+                                        <t t-if="d.is_favorite">★ </t><t t-esc="d.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </t>
+                        <t t-elif="state.dashboard">
+                            <h2 class="ara-dashboard-title"><t t-esc="state.dashboard.name"/></h2>
+                        </t>
+                        <t t-else="">
+                            <h2 class="ara-dashboard-title">Ara Enterprise Hub</h2>
+                        </t>
+                    </div>
+
+                    <div class="ara-dashboard-toolbar">
+                        <!-- Date Filter Pills -->
+                        <div class="ara-filter-pill-group">
+                            <button t-attf-class="ara-filter-btn #{state.activeFilter === 'today' ? 'active' : ''}"
+                                    t-on-click="() => this.onFilterChange('today')">
+                                Today
+                            </button>
+                            <button t-attf-class="ara-filter-btn #{state.activeFilter === 'this_week' ? 'active' : ''}"
+                                    t-on-click="() => this.onFilterChange('this_week')">
+                                This Week
+                            </button>
+                            <button t-attf-class="ara-filter-btn #{state.activeFilter === 'this_month' ? 'active' : ''}"
+                                    t-on-click="() => this.onFilterChange('this_month')">
+                                This Month
+                            </button>
+                            <button t-attf-class="ara-filter-btn #{state.activeFilter === 'this_quarter' ? 'active' : ''}"
+                                    t-on-click="() => this.onFilterChange('this_quarter')">
+                                This Quarter
+                            </button>
+                            <button t-attf-class="ara-filter-btn #{state.activeFilter === 'all' ? 'active' : ''}"
+                                    t-on-click="() => this.onFilterChange('all')">
+                                All Time
+                            </button>
+                        </div>
+
+                        <!-- Specialized Modern Year Filter Capsule -->
+                        <div t-attf-class="ara-year-picker-capsule #{isYearFilterActive ? 'active' : ''}"
+                             title="Filter Dashboard by Fiscal Year">
+                            <i class="fa fa-calendar-check-o ara-year-icon"/>
+                            <span class="ara-year-title" t-if="!isYearFilterActive">Year</span>
+                            <span class="ara-year-active-badge" t-if="isYearFilterActive">
+                                <t t-esc="activeYearLabel"/>
+                            </span>
+                            <select class="ara-year-select" t-on-change="onYearSelectChange" title="Select Fiscal Year">
+                                <option value="" t-att-selected="!isYearFilterActive">Select Year...</option>
+                                <option value="this_year" t-att-selected="state.activeFilter === 'this_year'">
+                                    📅 This Year (<t t-esc="currentYear"/>)
+                                </option>
+                                <option value="last_year" t-att-selected="state.activeFilter === 'last_year'">
+                                    📅 Last Year (<t t-esc="currentYear - 1"/>)
+                                </option>
+                                <t t-foreach="availablePastYears" t-as="y" t-key="y">
+                                    <option t-att-value="'year_' + y" t-att-selected="state.activeFilter === ('year_' + y)">
+                                        📅 Year <t t-esc="y"/>
+                                    </option>
+                                </t>
+                            </select>
+                            <t t-if="isYearFilterActive">
+                                <button class="ara-year-clear-btn" title="Reset Year Filter (Return to This Month)" t-on-click="clearYearFilter">
+                                    <i class="fa fa-times-circle"/>
+                                </button>
+                            </t>
+                            <t t-else="">
+                                <i class="fa fa-chevron-down ara-year-arrow"/>
+                            </t>
+                        </div>
+
+                        <!-- Actions Controls -->
+                        <div class="ara-toolbar-actions-row">
+                            <!-- Smart Insights Button (ClickUp AI Wand) -->
+                            <button class="ara-btn-action ara-btn-insights" 
+                                    title="View Automated AI Business Insights" 
+                                    t-on-click="toggleSmartInsights">
+                                <i class="fa fa-magic"/>
+                                <span class="d-none d-md-inline">Smart Insights</span>
+                                <span class="ara-badge-counter" t-if="state.smartInsights.length"><t t-esc="state.smartInsights.length"/></span>
+                            </button>
+
+                            <!-- Dashboard Sharing Button -->
+                            <button class="ara-btn-action ara-btn-share" 
+                                    title="Share Dashboard Collaboration &amp; Permissions" 
+                                    t-on-click="openShareModal">
+                                <i class="fa fa-paper-plane-o"/>
+                                <span class="d-none d-lg-inline">Share</span>
+                            </button>
+
+                            <!-- Scheduled Report Button -->
+                            <button class="ara-btn-action ara-btn-schedule-report" 
+                                    title="Configure Scheduled Dashboard Email/PDF/Excel Reports" 
+                                    t-on-click="onScheduleReport">
+                                <i class="fa fa-calendar-check-o"/>
+                                <span class="d-none d-xl-inline">Schedule Report</span>
+                            </button>
+
+                            <!-- Presentation Mode Button -->
+                            <button class="ara-btn-action ara-btn-presentation" 
+                                    title="Presentation Mode (Fullscreen Auto-rotating Slideshow)" 
+                                    t-on-click="startPresentationMode">
+                                <i class="fa fa-desktop"/>
+                                <span class="d-none d-md-inline">Presentation</span>
+                            </button>
+
+                            <!-- TV Wallboard Mode Button -->
+                            <button class="ara-btn-action ara-btn-tv" 
+                                    title="Continuous Wallboard / TV Mode" 
+                                    t-on-click="startTvMode">
+                                <i class="fa fa-television"/>
+                                <span class="d-none d-lg-inline">TV Mode</span>
+                            </button>
+
+                            <!-- Refresh Button -->
+                            <button t-attf-class="ara-btn-icon #{state.isRefreshing ? 'rotating' : ''}" 
+                                    title="Refresh Data" 
+                                    t-on-click="onManualRefresh">
+                                <i class="fa fa-refresh"/>
+                            </button>
+
+                            <!-- Reorder Mode Toggle -->
+                            <button t-attf-class="ara-btn-action ara-btn-reorder #{state.isEditMode ? 'active-reorder' : ''}" 
+                                    title="Toggle Widget Reordering Mode" 
+                                    t-on-click="toggleEditMode">
+                                <i t-attf-class="fa #{state.isEditMode ? 'fa-check' : 'fa-bars'}"/>
+                                <span t-if="!state.isEditMode">Reorder</span>
+                                <span t-else="">Done</span>
+                            </button>
+
+                            <!-- Edit / Add Widget (ClickUp Signature Primary CTA Button) -->
+                            <t t-if="state.dashboard and state.dashboard.can_edit">
+                                <button class="ara-btn-action ara-btn-primary-cta" t-on-click="onAddNewWidget">
+                                    <i class="fa fa-plus-circle"/> <span class="d-none d-sm-inline">Add Widget</span>
+                                </button>
+                                <button class="ara-btn-icon" title="Dashboard Settings" t-on-click="onEditDashboard">
+                                    <i class="fa fa-cog"/>
+                                </button>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- =========================================================
+                     3. DASHBOARD CONTENT GRID
+                     ========================================================= -->
+                <t t-if="state.isLoading">
+                    <div class="ara-grid-container">
+                        <div class="ara-card ara-col-4">
+                            <div class="ara-skeleton skeleton-text"/>
+                            <div class="ara-skeleton skeleton-value"/>
+                        </div>
+                        <div class="ara-card ara-col-4">
+                            <div class="ara-skeleton skeleton-text"/>
+                            <div class="ara-skeleton skeleton-value"/>
+                        </div>
+                        <div class="ara-card ara-col-4">
+                            <div class="ara-skeleton skeleton-text"/>
+                            <div class="ara-skeleton skeleton-value"/>
+                        </div>
+                        <div class="ara-card ara-col-6">
+                            <div class="ara-skeleton skeleton-text"/>
+                            <div class="ara-skeleton skeleton-chart"/>
+                        </div>
+                        <div class="ara-card ara-col-6">
+                            <div class="ara-skeleton skeleton-text"/>
+                            <div class="ara-skeleton skeleton-chart"/>
+                        </div>
+                    </div>
+                </t>
+
+                <t t-elif="!state.dashboard or state.widgets.length === 0">
+                    <div class="ara-state-msg" style="padding: 100px 20px;">
+                        <i class="fa fa-cubes"/>
+                        <h3>No widgets configured on this dashboard</h3>
+                        <p>Click "+ Add Widget" above to build your executive dashboard view.</p>
+                    </div>
+                </t>
+
+                <t t-else="">
+                    <!-- Render Widgets in Responsive Grid -->
+                    <div class="ara-grid-container">
+                        <t t-foreach="state.widgets" t-as="widget" t-key="widget.id">
+                            <BaseWidget widget="widget"
+                                         isEditMode="state.isEditMode"
+                                         onDragStart="(ev, id) => this.onDragStart(ev, id)"
+                                         onDragOver="(ev, id) => this.onDragOver(ev, id)"
+                                         onDrop="(ev, id) => this.onDrop(ev, id)"
+                                         onEdit="(w) => this.onEditWidget(w)"
+                                         onDuplicate="(w) => this.onDuplicateWidget(w)"
+                                         onDelete="(w) => this.onDeleteWidget(w)"
+                                         onDrilldown="(w) => this.onDrilldown(w)">
+                                <t t-component="getWidgetComponent(widget.widget_type)" 
+                                   widget="widget" 
+                                   onDrilldown="(w, recordId) => this.onDrilldown(w, recordId)"/>
+                            </BaseWidget>
+                        </t>
+                    </div>
+
+                    <!-- Bottom Compact Responsive Footer -->
+                    <div class="ara-dashboard-footer">
+                        <span class="ara-footer-brand">
+                            <i class="fa fa-cubes me-1"/> ARA ENTERPRISE INTELLIGENCE
+                        </span>
+                        <span class="ara-footer-separator">•</span>
+                        <span class="ara-footer-status">
+                            <i class="fa fa-circle text-success me-1"/> Live Sync
+                        </span>
+                    </div>
+                </t>
+            </div>
+
+            <!-- =============================================================
+                 4. SMART INSIGHTS SLIDE-IN DRAWER (ClickUp AI Assistant Panel)
+                 ============================================================= -->
+            <t t-if="state.isSmartInsightsOpen">
+                <div class="ara-drawer-backdrop" t-on-click="closeSmartInsights"/>
+                <div class="ara-insights-drawer">
+                    <div class="ara-drawer-header">
+                        <div class="ara-drawer-title-group">
+                            <h3 class="ara-drawer-title">Smart Business Insights</h3>
+                            <p class="ara-drawer-subtitle">Automated analytical telemetry and performance trends.</p>
+                        </div>
+                        <button class="ara-drawer-close" t-on-click="closeSmartInsights">
+                            <i class="fa fa-times"/>
+                        </button>
+                    </div>
+                    <div class="ara-drawer-body">
+                        <t t-if="state.smartInsights.length === 0">
+                            <div class="ara-insights-empty">
+                                <i class="fa fa-magic"/>
+                                <p>Synthesizing latest telemetry... All operational metrics running smoothly.</p>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <t t-foreach="state.smartInsights" t-as="insight" t-key="insight.id">
+                                <div t-attf-class="ara-insight-card ara-insight-#{insight.type}">
+                                    <div class="ara-insight-header">
+                                        <span class="ara-insight-badge"><t t-esc="insight.badge"/></span>
+                                        <i t-attf-class="fa #{insight.icon}"/>
+                                    </div>
+                                    <h4 class="ara-insight-title"><t t-esc="insight.title"/></h4>
+                                    <p class="ara-insight-desc"><t t-esc="insight.description"/></p>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </t>
+
+            <!-- =============================================================
+                 5. DASHBOARD SHARING MODAL (Only Me, Department, Users, Groups, Everyone)
+                 ============================================================= -->
+            <t t-if="state.isShareModalOpen">
+                <div class="ara-modal-backdrop" t-on-click="closeShareModal"/>
+                <div class="ara-share-modal">
+                    <div class="ara-modal-header">
+                        <div class="ara-modal-title-group">
+                            <div class="ara-share-badge">
+                                <i class="fa fa-users"/> WORKSPACE SHARING
+                            </div>
+                            <h3 class="ara-modal-title">Share Dashboard</h3>
+                            <p class="ara-modal-subtitle">Configure visibility and permissions for <t t-esc="state.dashboard.name"/></p>
+                        </div>
+                        <button class="ara-modal-close" t-on-click="closeShareModal">
+                            <i class="fa fa-times"/>
+                        </button>
+                    </div>
+                    <div class="ara-modal-body">
+                        <!-- Share Scope Radio Selection -->
+                        <div class="ara-share-section">
+                            <label class="ara-share-section-title">Who can access this dashboard?</label>
+                            <div class="ara-radio-list">
+                                <label class="ara-radio-item" t-on-click="() => this.setShareScope('only_me')">
+                                    <input type="radio" name="share_scope" value="only_me" t-att-checked="state.shareScope === 'only_me'"/>
+                                    <div class="ara-radio-content">
+                                        <span class="title">Only Me</span>
+                                        <span class="desc">Private dashboard visible only to you.</span>
+                                    </div>
+                                </label>
+                                <label class="ara-radio-item" t-on-click="() => this.setShareScope('department')">
+                                    <input type="radio" name="share_scope" value="department" t-att-checked="state.shareScope === 'department'"/>
+                                    <div class="ara-radio-content">
+                                        <span class="title">My Department</span>
+                                        <span class="desc">Accessible to members of your organizational department.</span>
+                                    </div>
+                                </label>
+                                <label class="ara-radio-item" t-on-click="() => this.setShareScope('users')">
+                                    <input type="radio" name="share_scope" value="users" t-att-checked="state.shareScope === 'users'"/>
+                                    <div class="ara-radio-content">
+                                        <span class="title">Selected Users</span>
+                                        <span class="desc">Shared explicitly with designated team members.</span>
+                                    </div>
+                                </label>
+                                <label class="ara-radio-item" t-on-click="() => this.setShareScope('groups')">
+                                    <input type="radio" name="share_scope" value="groups" t-att-checked="state.shareScope === 'groups'"/>
+                                    <div class="ara-radio-content">
+                                        <span class="title">Selected Groups</span>
+                                        <span class="desc">Shared with specific user privilege access groups.</span>
+                                    </div>
+                                </label>
+                                <label class="ara-radio-item" t-on-click="() => this.setShareScope('everyone')">
+                                    <input type="radio" name="share_scope" value="everyone" t-att-checked="state.shareScope === 'everyone'"/>
+                                    <div class="ara-radio-content">
+                                        <span class="title">Everyone</span>
+                                        <span class="desc">Accessible across the entire company organization.</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Share Permission Level -->
+                        <div class="ara-share-section">
+                            <label class="ara-share-section-title">Permission Level</label>
+                            <div class="ara-perm-list">
+                                <label class="ara-perm-item" t-on-click="() => this.setSharePermission('view')">
+                                    <input type="radio" name="share_perm" value="view" t-att-checked="state.sharePermission === 'view'"/>
+                                    <div class="ara-perm-content">
+                                        <span class="title">View</span>
+                                        <span class="desc">Read-only view of dashboard and analytical widgets.</span>
+                                    </div>
+                                </label>
+                                <label class="ara-perm-item" t-on-click="() => this.setSharePermission('edit')">
+                                    <input type="radio" name="share_perm" value="edit" t-att-checked="state.sharePermission === 'edit'"/>
+                                    <div class="ara-perm-content">
+                                        <span class="title">Edit</span>
+                                        <span class="desc">Can add, edit widgets, and customize layout arrangements.</span>
+                                    </div>
+                                </label>
+                                <label class="ara-perm-item" t-on-click="() => this.setSharePermission('manage')">
+                                    <input type="radio" name="share_perm" value="manage" t-att-checked="state.sharePermission === 'manage'"/>
+                                    <div class="ara-perm-content">
+                                        <span class="title">Manage</span>
+                                        <span class="desc">Full administrative ownership, sharing, and deletion control.</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ara-modal-footer">
+                        <button class="ara-btn-secondary" t-on-click="onEditDashboard">
+                            <i class="fa fa-sliders"/> Advanced Settings
+                        </button>
+                        <div class="ara-modal-footer-actions">
+                            <button class="ara-btn-outline" t-on-click="closeShareModal">Cancel</button>
+                            <button class="ara-btn-primary" t-on-click="saveShareSettings" t-att-disabled="state.shareSaving">
+                                <i class="fa fa-check"/> Save Permissions
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <!-- =============================================================
+                 6. PRESENTATION MODE OVERLAY (Auto-rotating Fullscreen Slideshow)
+                 ============================================================= -->
+            <t t-if="state.isPresentationMode">
+                <div class="ara-presentation-overlay">
+                    <!-- Top Control Bar -->
+                    <div class="ara-pres-header">
+                        <div class="ara-pres-brand">
+                            <div class="ara-brand-emblem-badge">
+                                <svg class="ara-brand-svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <defs>
+                                        <linearGradient id="cuPresGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#7B68EE"/>
+                                            <stop offset="50%" stop-color="#B721FF"/>
+                                            <stop offset="100%" stop-color="#49CCF9"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M4 14.5L12 7.5L20 14.5" stroke="url(#cuPresGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 19.5L12 15L17 19.5" stroke="url(#cuPresGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+                                </svg>
+                                <span class="ara-brand-title">ARA</span>
+                            </div>
+                            <span class="ara-pres-badge">PRESENTATION MODE</span>
+                            <span class="ara-pres-dashboard-name"><t t-esc="currentSlide.dashboard_name"/></span>
+                        </div>
+                        
+                        <!-- Rotation Countdown Indicator Bar -->
+                        <div class="ara-pres-timer-line" t-att-class="{'is-paused': !state.presentationPlaying}"/>
+
+                        <div class="ara-pres-controls">
+                            <span class="ara-pres-slide-counter">
+                                Slide <t t-esc="state.presentationIndex + 1"/> of <t t-esc="state.presentationSlides.length || 1"/>
+                            </span>
+                            <button class="ara-pres-btn" title="Previous Slide (Left Arrow)" t-on-click="prevSlide">
+                                <i class="fa fa-step-backward"/>
+                            </button>
+                            <button class="ara-pres-btn ara-pres-play-btn" title="Pause / Resume Rotation (Spacebar)" t-on-click="togglePresentationPlay">
+                                <i t-attf-class="fa #{state.presentationPlaying ? 'fa-pause' : 'fa-play'}"/>
+                            </button>
+                            <button class="ara-pres-btn" title="Next Slide (Right Arrow)" t-on-click="nextSlide">
+                                <i class="fa fa-step-forward"/>
+                            </button>
+                            <button class="ara-pres-btn ara-pres-exit-btn" title="Exit Presentation (ESC)" t-on-click="exitPresentationMode">
+                                <i class="fa fa-times"/> Exit
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Presentation Stage (Giant High-Impact Billboard Card) -->
+                    <div class="ara-pres-stage">
+                        <div class="ara-pres-billboard-card">
+                            <div class="ara-pres-card-top">
+                                <span class="ara-pres-kpi-category"><t t-esc="currentSlide.primary_kpi.title"/></span>
+                                <span class="ara-pres-live-tag">● LIVE METRIC</span>
+                            </div>
+
+                            <div class="ara-pres-card-body">
+                                <div class="ara-pres-giant-value">
+                                    <t t-esc="currentSlide.primary_kpi.value"/>
+                                </div>
+
+                                <div class="ara-pres-trend-row">
+                                    <span t-attf-class="ara-pres-trend-badge #{currentSlide.primary_kpi.trend_pct >= 0 ? 'positive' : 'negative'}">
+                                        <i t-attf-class="fa #{currentSlide.primary_kpi.trend_pct >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"/>
+                                        <t t-if="currentSlide.primary_kpi.trend_pct >= 0">+</t><t t-esc="currentSlide.primary_kpi.trend_pct"/>%
+                                    </span>
+                                    <span class="ara-pres-trend-sub">vs previous period</span>
+                                </div>
+
+                                <div class="ara-pres-visual-icon">
+                                    <i t-attf-class="fa #{currentSlide.primary_kpi.icon || 'fa-line-chart'}"/>
+                                </div>
+                            </div>
+
+                            <!-- Secondary Telemetry Row in Presentation Mode -->
+                            <div class="ara-pres-secondary-strip" t-if="currentSlide.secondary_kpis and currentSlide.secondary_kpis.length">
+                                <t t-foreach="currentSlide.secondary_kpis" t-as="sec" t-key="sec.title">
+                                    <div class="ara-pres-sec-item">
+                                        <span class="sec-label"><t t-esc="sec.title"/></span>
+                                        <span class="sec-value"><t t-esc="sec.value"/></span>
+                                    </div>
+                                </t>
+                                <t t-if="currentSlide.progress_kpi">
+                                    <div class="ara-pres-sec-item ara-pres-progress-item">
+                                        <div class="sec-progress-meta">
+                                            <span class="sec-label"><t t-esc="currentSlide.progress_kpi.title"/></span>
+                                            <span class="sec-pct"><t t-esc="currentSlide.progress_kpi.percentage"/>%</span>
+                                        </div>
+                                        <div class="sec-progress-track">
+                                            <div class="sec-progress-fill" t-attf-style="width: #{currentSlide.progress_kpi.percentage}%;"/>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide Indicator Carousel Dots (Sales -> Inventory -> Finance -> CRM) -->
+                    <div class="ara-pres-footer-bar">
+                        <div class="ara-pres-dots">
+                            <t t-foreach="state.presentationSlides" t-as="slide" t-key="slide.dashboard_id">
+                                <button t-attf-class="ara-pres-dot #{slide_index === state.presentationIndex ? 'active' : ''}"
+                                        t-att-title="slide.dashboard_name"
+                                        t-on-click="() => this.goToSlide(slide_index)">
+                                    <span class="dot-inner"/>
+                                    <span class="dot-label"><t t-esc="slide.dashboard_name"/></span>
+                                </button>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ara_dashboard.TodoWidget">
+        <div class="ara-todo-container">
+            <div class="ara-todo-header">
+                <span class="ara-todo-progress-text">
+                    <t t-esc="completedCount"/> of <t t-esc="totalCount"/> completed
+                </span>
+                <span class="ara-todo-badge"><t t-esc="percentage"/>%</span>
+            </div>
+            <div class="ara-todo-bar">
+                <div class="ara-todo-bar-fill" t-attf-style="width: #{percentage}%;"/>
+            </div>
+            <div class="ara-todo-list">
+                <t t-if="!state.items.length">
+                    <div class="ara-state-msg">
+                        <i class="fa fa-check-circle-o"/>
+                        <p>All tasks completed!</p>
+                    </div>
+                </t>
+                <t t-foreach="state.items" t-as="item" t-key="item.id">
+                    <div t-attf-class="ara-todo-item #{item.done ? 'is-done' : ''}"
+                         t-on-click="() => this.onItemClick(item)">
+                        <input type="checkbox"
+                               class="ara-todo-checkbox"
+                               t-att-checked="item.done"
+                               t-on-click="(ev) => this.toggleItem(item, ev)"/>
+                        <div class="ara-todo-body">
+                            <span class="ara-todo-title"><t t-esc="item.title"/></span>
+                            <t t-if="item.subtitle">
+                                <span class="ara-todo-subtitle"><t t-esc="item.subtitle"/></span>
+                            </t>
+                        </div>
+                        <t t-if="item.badge">
+                            <span class="ara-todo-tag"><t t-esc="item.badge"/></span>
+                        </t>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

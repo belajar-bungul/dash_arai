@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ara_dashboard.RadialWidget">
+        <div class="ara-radial-container" t-on-click="onClick">
+            <div class="ara-radial-gauge-wrapper">
+                <svg class="ara-radial-svg" viewBox="0 0 120 120">
+                    <defs>
+                        <linearGradient t-att-id="gradientId" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" t-att-stop-color="gradientColors[0]"/>
+                            <stop offset="100%" t-att-stop-color="gradientColors[1]"/>
+                        </linearGradient>
+                    </defs>
+                    <circle class="ara-radial-bg" cx="60" cy="60" r="50" fill="none" stroke-width="10"/>
+                    <circle class="ara-radial-progress" cx="60" cy="60" r="50" fill="none" stroke-width="10"
+                            t-attf-stroke="url(##{gradientId})"
+                            stroke-dasharray="314.16"
+                            t-att-stroke-dashoffset="strokeDashoffset"/>
+                </svg>
+                <div class="ara-radial-center-text">
+                    <span class="ara-radial-pct"><t t-esc="percentage"/>%</span>
+                    <span class="ara-radial-status">ACHIEVED</span>
+                </div>
+            </div>
+            <div class="ara-radial-meta">
+                <div class="ara-radial-meta-col">
+                    <span class="meta-label">Current</span>
+                    <span class="meta-val"><t t-esc="data.formatted_current || '0'"/></span>
+                </div>
+                <div class="ara-radial-divider"/>
+                <div class="ara-radial-meta-col">
+                    <span class="meta-label">Target</span>
+                    <span class="meta-val"><t t-esc="data.formatted_target || '0'"/></span>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

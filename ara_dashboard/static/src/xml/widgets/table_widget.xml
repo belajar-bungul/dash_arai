@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ara_dashboard.TableWidget">
+        <div class="ara-table-content">
+            <t t-if="isTableEmpty">
+                <div class="ara-state-msg">
+                    <i class="fa fa-table"/>
+                    <p>No records found</p>
+                </div>
+            </t>
+            <t t-else="">
+                <table class="ara-custom-table">
+                    <thead>
+                        <tr>
+                            <t t-foreach="data.columns" t-as="col" t-key="col.name">
+                                <th><t t-esc="col.label"/></th>
+                            </t>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="data.rows" t-as="row" t-key="row.id">
+                            <tr t-on-click="() => this.onRowClick(row)">
+                                <t t-foreach="data.columns" t-as="col" t-key="col.name">
+                                    <td><t t-esc="row.cells[col.name]"/></td>
+                                </t>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,53 @@
+/* ==========================================================================
+   ARA DASHBOARD DESIGN TOKENS (Gentle Pastel Blush Pink & Warm Butter Yellow)
+   ========================================================================== */
+
+/* Gentle Pastel Canvas & Porcelain Surfaces */
+$ara-bg-body: #FFF7F8;
+$ara-bg-surface: rgba(255, 255, 255, 0.85);
+$ara-bg-surface-elevated: #FFFFFF;
+$ara-bg-surface-hover: rgba(255, 255, 255, 0.95);
+$ara-bg-capsule: rgba(255, 255, 255, 0.75);
+
+/* Signature Brand Accents & Gradients */
+$ara-accent-primary: #7B68EE;
+$ara-accent-primary-hover: #6E56CF;
+$ara-accent-violet: #8F55FF;
+$ara-accent-magenta: #B721FF;
+$ara-accent-pink: #F472B6;
+$ara-accent-glow: rgba(244, 114, 182, 0.25);
+$ara-accent-gradient: linear-gradient(135deg, #F472B6 0%, #7B68EE 100%);
+$ara-accent-multi-gradient: linear-gradient(135deg, #F472B6 0%, #7B68EE 50%, #38BDF8 100%);
+
+/* Functional Highlights */
+$ara-accent-emerald: #10B981;
+$ara-accent-cyan: #06B6D4;
+$ara-accent-amber: #F59E0B;
+$ara-accent-coral: #FB7185;
+$ara-accent-purple: #8B5CF6;
+$ara-accent-blue: #3B82F6;
+
+/* Text & Contrast (Warm Espresso Slate for Maximum Readability) */
+$ara-text-pure: #1E293B;
+$ara-text-secondary: #475569;
+$ara-text-muted: #64748B;
+$ara-text-dim: #94A3B8;
+
+/* Borders & Dividers */
+$ara-border-subtle: rgba(0, 0, 0, 0.07);
+$ara-border-highlight: rgba(255, 255, 255, 0.9);
+$ara-border-active: rgba(123, 104, 238, 0.65);
+
+/* Radii & Shadows (Cozy Soft Porcelain Glass Curves) */
+$ara-radius-sm: 8px;
+$ara-radius-md: 12px;
+$ara-radius-lg: 16px;
+$ara-radius-pill: 9999px;
+
+$ara-shadow-card: 0 4px 20px rgba(226, 175, 185, 0.12), 0 1px 3px rgba(0, 0, 0, 0.03);
+$ara-shadow-hover: 0 12px 32px rgba(226, 175, 185, 0.22), 0 2px 6px rgba(0, 0, 0, 0.04);
+$ara-shadow-dropdown: 0 14px 40px rgba(200, 150, 160, 0.25);
+
+/* Transitions */
+$ara-transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+

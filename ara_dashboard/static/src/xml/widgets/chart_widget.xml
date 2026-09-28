@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ara_dashboard.ChartWidget">
+        <div class="ara-chart-content">
+            <t t-if="isChartEmpty">
+                <div class="ara-state-msg">
+                    <i class="fa fa-chart-bar"/>
+                    <p>No data available for this period</p>
+                </div>
+            </t>
+            <t t-else="">
+                <canvas t-ref="chartCanvas"/>
+            </t>
+        </div>
+    </t>
+</templates>

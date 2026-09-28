@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ara_dashboard.FlowerWidget">
+        <div class="ara-flower-container" t-on-click="onClick">
+            <div class="ara-flower-canvas-wrap">
+                <canvas t-ref="flowerCanvas" width="220" height="220" class="ara-flower-canvas"/>
+            </div>
+            <div class="ara-flower-legend">
+                <t t-foreach="petals" t-as="p" t-key="p.label">
+                    <div class="ara-flower-item">
+                        <span class="flower-dot" t-attf-style="background-color: hsla(#{ (p.index * 360) / petals.length }, 85%, 55%, 0.85);"/>
+                        <span class="flower-name"><t t-esc="p.label"/></span>
+                        <span class="flower-val"><t t-esc="p.formatted_value"/></span>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

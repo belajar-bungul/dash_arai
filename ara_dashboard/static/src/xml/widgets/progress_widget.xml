@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ara_dashboard.ProgressWidget">
+        <div class="ara-progress-content" t-on-click="onClick">
+            <div class="ara-progress-info">
+                <span class="ara-progress-percent">
+                    <t t-esc="data.percentage || 0"/>%
+                </span>
+                <span class="ara-progress-ratio">
+                    <t t-esc="data.formatted_current || 0"/> / <t t-esc="data.formatted_target || 0"/>
+                </span>
+            </div>
+            <div class="ara-progress-bar-track">
+                <div t-attf-class="ara-progress-bar-fill #{accentClass}" t-attf-style="width: #{data.percentage || 0}%;"/>
+            </div>
+        </div>
+    </t>
+</templates>

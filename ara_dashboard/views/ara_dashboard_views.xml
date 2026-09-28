@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action for Widget List View (Defined First to be referenced in button statinfo) -->
+    <record id="action_ara_dashboard_widget_list" model="ir.actions.act_window">
+        <field name="name">Dashboard Widgets</field>
+        <field name="res_model">ara.dashboard.widget</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Dashboard Form View -->
+    <record id="view_ara_dashboard_form" model="ir.ui.view">
+        <field name="name">ara.dashboard.form</field>
+        <field name="model">ara.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Ara Dashboard">
+                <header>
+                    <button name="action_view_dashboard" string="Open Dashboard" type="object" class="oe_highlight" icon="fa-desktop"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-th-large" type="action" name="%(action_ara_dashboard_widget_list)d"
+                                context="{'default_dashboard_id': id, 'search_default_dashboard_id': id}">
+                            <field string="Widgets" name="widget_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Executive Sales Performance"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="general_settings" string="General Configuration">
+                            <field name="user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                        <group name="display_settings" string="Display &amp; Automation">
+                            <field name="refresh_interval"/>
+                            <field name="date_filter_default"/>
+                            <field name="presentation_interval"/>
+                            <field name="tv_mode_enabled"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Widgets" name="page_widgets">
+                            <field name="widget_ids">
+                                <list string="Widgets" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="widget_type"/>
+                                    <field name="model_id"/>
+                                    <field name="col_span"/>
+                                    <field name="color_accent"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Sharing &amp; Permissions" name="page_sharing">
+                            <group>
+                                <group string="Access &amp; Collaboration">
+                                    <field name="share_scope" widget="radio"/>
+                                    <field name="share_permission" widget="radio"/>
+                                </group>
+                                <group string="Target Audience">
+                                    <field name="department_id" invisible="share_scope != 'department'"/>
+                                    <field name="shared_user_ids" widget="many2many_tags" invisible="share_scope != 'users'"/>
+                                    <field name="shared_group_ids" widget="many2many_tags" invisible="share_scope != 'groups'"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Description" name="page_description">
+                            <field name="description" placeholder="Dashboard description, business goals, or presentation notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Dashboard List View -->
+    <record id="view_ara_dashboard_list" model="ir.ui.view">
+        <field name="name">ara.dashboard.list</field>
+        <field name="model">ara.dashboard</field>
+        <field name="arch" type="xml">
+            <list string="Ara Dashboards">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="widget_count"/>
+                <field name="share_scope"/>
+                <field name="share_permission"/>
+                <field name="refresh_interval"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Widget Form View -->
+    <record id="view_ara_dashboard_widget_form" model="ir.ui.view">
+        <field name="name">ara.dashboard.widget.form</field>
+        <field name="model">ara.dashboard.widget</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard Widget">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Monthly Revenue"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="widget_basic" string="Widget Settings">
+                            <field name="dashboard_id"/>
+                            <field name="widget_type"/>
+                            <field name="col_span"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                        <group name="styling_settings" string="Styling &amp; Theme">
+                            <field name="color_accent"/>
+                            <field name="kpi_icon" placeholder="e.g. fa-chart-line"/>
+                            <field name="chart_type" invisible="widget_type not in ['chart', 'bar', 'horizontal_bar', 'line', 'doughnut', 'pie', 'polar_area', 'radar', 'scatter']"/>
+                            <field name="trend_comparison" invisible="widget_type not in ['tiles', 'kpi', 'radial', 'bullet', 'progress']"/>
+                            <field name="target_value" invisible="widget_type not in ['radial', 'bullet', 'progress', 'tiles', 'kpi']"/>
+                        </group>
+                    </group>
+                    <group name="data_source" string="Data Source &amp; Aggregation">
+                        <group>
+                            <field name="model_id" options="{'no_create': True}"/>
+                            <field name="date_field_id" options="{'no_create': True}"/>
+                            <field name="measure_field_id" options="{'no_create': True}"/>
+                            <field name="scatter_x_field_id" invisible="widget_type != 'scatter'" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="aggregation_type"/>
+                            <field name="groupby_field_id" invisible="widget_type not in ['chart', 'bar', 'horizontal_bar', 'line', 'doughnut', 'pie', 'polar_area', 'radar', 'flower', 'funnel']" options="{'no_create': True}"/>
+                            <field name="limit" invisible="widget_type not in ['chart', 'bar', 'horizontal_bar', 'line', 'doughnut', 'pie', 'polar_area', 'radar', 'flower', 'funnel', 'table', 'scatter', 'todo']"/>
+                            <field name="sort_order" invisible="widget_type not in ['chart', 'bar', 'horizontal_bar', 'line', 'doughnut', 'pie', 'polar_area', 'radar', 'flower', 'funnel', 'table', 'scatter']"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Filter Domain" name="page_domain">
+                            <field name="domain" widget="text" placeholder="e.g. [('state', '=', 'sale')]"/>
+                        </page>
+                        <page string="Table Columns" name="page_table_columns" invisible="widget_type != 'table'">
+                            <field name="table_field_ids" widget="many2many_tags"/>
+                        </page>
+                        <page string="Advanced JSON Config" name="page_json_config">
+                            <field name="config_json" widget="text"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Widget List View -->
+    <record id="view_ara_dashboard_widget_list" model="ir.ui.view">
+        <field name="name">ara.dashboard.widget.list</field>
+        <field name="model">ara.dashboard.widget</field>
+        <field name="arch" type="xml">
+            <list string="Dashboard Widgets">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="dashboard_id"/>
+                <field name="widget_type"/>
+                <field name="model_id"/>
+                <field name="col_span"/>
+                <field name="color_accent"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+</odoo>

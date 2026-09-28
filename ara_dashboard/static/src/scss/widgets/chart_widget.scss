@@ -1,0 +1,17 @@
+@import "../variables.scss";
+
+.ara-chart-content {
+    position: relative;
+    height: 240px;
+    width: 100%;
+
+    canvas {
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+        transition: filter 0.25s ease;
+
+        &:hover {
+            filter: drop-shadow(0 6px 16px rgba(123, 104, 238, 0.22));
+        }
+    }
+}
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="cron_ara_dashboard_process_reports" model="ir.cron">
+        <field name="name">Ara Dashboard: Process Scheduled Reports</field>
+        <field name="model_id" ref="model_ara_dashboard_report_schedule"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_process_scheduled_reports()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

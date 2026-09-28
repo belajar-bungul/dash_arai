@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ara_dashboard_user,ara.dashboard.user,model_ara_dashboard,group_ara_dashboard_user,1,0,0,0
+access_ara_dashboard_manager,ara.dashboard.manager,model_ara_dashboard,group_ara_dashboard_manager,1,1,1,1
+access_ara_dashboard_widget_user,ara.dashboard.widget.user,model_ara_dashboard_widget,group_ara_dashboard_user,1,0,0,0
+access_ara_dashboard_widget_manager,ara.dashboard.widget.manager,model_ara_dashboard_widget,group_ara_dashboard_manager,1,1,1,1
+access_ara_dashboard_report_schedule_user,ara.dashboard.report.schedule.user,model_ara_dashboard_report_schedule,group_ara_dashboard_user,1,1,1,0
+access_ara_dashboard_report_schedule_manager,ara.dashboard.report.schedule.manager,model_ara_dashboard_report_schedule,group_ara_dashboard_manager,1,1,1,1

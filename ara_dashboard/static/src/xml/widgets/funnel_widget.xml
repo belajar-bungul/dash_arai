@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ara_dashboard.FunnelWidget">
+        <div class="ara-funnel-container" t-on-click="onClick">
+            <t t-if="!stages.length">
+                <div class="ara-state-msg">
+                    <i class="fa fa-filter"/>
+                    <p>No funnel data available</p>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="ara-funnel-stages">
+                    <t t-foreach="stages" t-as="stage" t-key="stage.name">
+                        <div class="ara-funnel-stage-item">
+                            <!-- Header Meta Row: Stage Name Left, Formatted Value & % Right -->
+                            <div class="ara-funnel-meta-row">
+                                <div class="ara-funnel-left-info">
+                                    <span class="ara-funnel-step-badge"><t t-esc="stage_index + 1"/></span>
+                                    <span class="ara-funnel-stage-name" t-att-title="stage.name"><t t-esc="stage.name"/></span>
+                                </div>
+                                <div class="ara-funnel-right-metrics">
+                                    <span class="ara-funnel-stage-val"><t t-esc="stage.formatted_value"/></span>
+                                    <span class="ara-funnel-conversion-pill"
+                                          t-att-style="stage_index === 0 ? getTopBadgeStyle() : ''"
+                                          t-att-class="stage_index === 0 ? 'top-stage' : ''">
+                                        <t t-esc="stage.conversion_pct"/>%
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Funnel Progress Track -->
+                            <div class="ara-funnel-bar-track">
+                                <div class="ara-funnel-bar-fill"
+                                     t-attf-style="width: #{stage.percentage}%; background: #{getStageGradient(stage_index, stages.length)}; box-shadow: #{getStageGlow(stage_index)};">
+                                </div>
+                            </div>
+                            <!-- Drop-off Badge if applicable -->
+                            <t t-if="stage_index &gt; 0 and stage.drop_off &lt; 0">
+                                <div class="ara-funnel-drop-row">
+                                    <span class="ara-funnel-drop-text">
+                                        <i class="fa fa-arrow-down me-1"/>
+                                        <t t-esc="Math.abs(stage.drop_off)"/>% drop
+                                    </span>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

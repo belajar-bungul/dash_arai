@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Scheduled Reports Action -->
+    <record id="action_ara_dashboard_report_schedule" model="ir.actions.act_window">
+        <field name="name">Scheduled Reports</field>
+        <field name="res_model">ara.dashboard.report.schedule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Scheduled Dashboard Report!
+            </p>
+            <p>
+                Configure automated email dispatches (HTML, PDF, or Excel) to executives and department managers on a recurring schedule.
+            </p>
+        </field>
+    </record>
+
+    <!-- Scheduled Report List View -->
+    <record id="view_ara_dashboard_report_schedule_list" model="ir.ui.view">
+        <field name="name">ara.dashboard.report.schedule.list</field>
+        <field name="model">ara.dashboard.report.schedule</field>
+        <field name="arch" type="xml">
+            <list string="Scheduled Dashboard Reports">
+                <field name="name"/>
+                <field name="dashboard_id"/>
+                <field name="schedule_interval"/>
+                <field name="day_of_week"/>
+                <field name="schedule_time"/>
+                <field name="report_format"/>
+                <field name="date_filter"/>
+                <field name="last_sent_date"/>
+                <field name="next_run_date"/>
+                <field name="state" widget="badge" decoration-success="state == 'active'" decoration-muted="state == 'paused'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Scheduled Report Form View -->
+    <record id="view_ara_dashboard_report_schedule_form" model="ir.ui.view">
+        <field name="name">ara.dashboard.report.schedule.form</field>
+        <field name="model">ara.dashboard.report.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Scheduled Dashboard Report">
+                <header>
+                    <button name="action_send_now" string="Send Report Now" type="object" class="oe_highlight" icon="fa-paper-plane"/>
+                    <button name="action_download_excel" string="Download Excel (.xlsx)" type="object" icon="fa-file-excel-o"/>
+                    <button name="action_toggle_pause" string="Pause / Resume" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="active,paused"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Weekly Sales Executive Briefing"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Dashboard &amp; Cadence">
+                            <field name="dashboard_id"/>
+                            <field name="schedule_interval"/>
+                            <field name="day_of_week" invisible="schedule_interval != 'weekly'"/>
+                            <field name="schedule_time"/>
+                            <field name="date_filter"/>
+                        </group>
+                        <group string="Format &amp; Delivery Meta">
+                            <field name="report_format"/>
+                            <field name="user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="last_sent_date"/>
+                            <field name="next_run_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Recipients &amp; Notifications" name="page_recipients">
+                            <group>
+                                <field name="recipient_user_ids" widget="many2many_tags"
+                                       options="{'no_create': True}"
+                                       placeholder="Select internal users (will receive Odoo notifications &amp; access link)..."/>
+                                <field name="recipient_emails"
+                                       placeholder="Optional: sales@company.com, manager@company.com"/>
+                                <field name="subject"/>
+                            </group>
+                            <div class="alert alert-info mt-2" role="alert">
+                                <i class="fa fa-info-circle me-1" title="Information"/>
+                                <strong>Automated Account Notifications:</strong> All tagged users above will automatically receive internal Odoo notifications (Discuss inbox &amp; notification bell 🔔) complete with direct links to access the dashboard, as well as notifications whenever scheduled reports are executed.
+                            </div>
+                        </page>
+                        <page string="Content Sections" name="page_sections">
+                            <group>
+                                <group string="Report Components">
+                                    <field name="include_kpis"/>
+                                    <field name="include_charts"/>
+                                    <field name="include_tables"/>
+                                    <field name="include_insights"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Scheduled Report Search View -->
+    <record id="view_ara_dashboard_report_schedule_search" model="ir.ui.view">
+        <field name="name">ara.dashboard.report.schedule.search</field>
+        <field name="model">ara.dashboard.report.schedule</field>
+        <field name="arch" type="xml">
+            <search string="Search Scheduled Reports">
+                <field name="name"/>
+                <field name="dashboard_id"/>
+                <field name="recipient_emails"/>
+                <filter string="Active" name="filter_active" domain="[('state', '=', 'active')]"/>
+                <filter string="Paused" name="filter_paused" domain="[('state', '=', 'paused')]"/>
+                <separator/>
+                <filter string="Weekly" name="filter_weekly" domain="[('schedule_interval', '=', 'weekly')]"/>
+                <filter string="Daily" name="filter_daily" domain="[('schedule_interval', '=', 'daily')]"/>
+                <group>
+                    <filter string="Dashboard" name="group_by_dashboard" context="{'group_by': 'dashboard_id'}"/>
+                    <filter string="Frequency" name="group_by_interval" context="{'group_by': 'schedule_interval'}"/>
+                    <filter string="Format" name="group_by_format" context="{'group_by': 'report_format'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>
