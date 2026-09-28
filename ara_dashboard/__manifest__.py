@@ -36,7 +36,7 @@ Key Features & Highlights:
 * **TV Mode (Operations Wallboard):** Full-screen telemetry view with digital live clock and telemetry beacons, ideal for office TV monitors and warehouse command centers.
 * **Automated Scheduled Reports & Account Notifications:**
   - Cadence: Daily, Weekly, or Monthly delivery in Interactive HTML Email and Excel (.xlsx) formats.
-  - Native Odoo User Tagging: Automatically sends Discuss inbox messages and notification bell 🔔 alerts with direct access links.
+  - Native Odoo User Tagging: Automatically sends Discuss inbox messages and notification bell alerts with direct access links.
 * **Pre-Configured Out-of-the-Box Hubs:** Ready-to-use business hubs for Sales, CRM, Inventory/Stock, Accounting, Manufacturing (MRP), and Purchase/Procurement with 44+ metric templates.
 * **Real-Time ORM & Performance First:** Sub-second server-side aggregation calculations without redundant data synchronization.
 * **Native Odoo 19 OWL Architecture:** 100% OWL component structure, fully responsive on desktop, tablet, and mobile devices.
