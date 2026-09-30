@@ -1,3 +1,4 @@
+/** @odoo-module **/
 import { Component, useRef, onWillStart, onWillUnmount, useEffect } from "@odoo/owl";
 import { loadBundle } from "@web/core/assets";
 import { araWidgetRegistry } from "../widget_registry";

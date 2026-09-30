@@ -1,3 +1,4 @@
+/** @odoo-module **/
 import { Component, useEffect, useRef } from "@odoo/owl";
 import { araWidgetRegistry } from "../widget_registry";
 

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Ara Dashboard - Modern Executive Business Intelligence',
-    'version': '19.0.1.0.0',
+    'version': '18.0.1.0.0',
     'category': 'Productivity/Dashboard',
     'summary': 'Next-Gen Executive Business Intelligence Dashboard with 15+ Interactive Widgets, Dynamic Year Filter, TV Wallboard, Scheduled Reports & Odoo Discuss Notifications',
     'description': """
-Ara Dashboard - Modern Executive Business Intelligence for Odoo 19
+Ara Dashboard - Modern Executive Business Intelligence for Odoo 18
 ==================================================================
 
 Transform your enterprise data into actionable, visual business intelligence with Ara Dashboard.
@@ -39,7 +39,7 @@ Key Features & Highlights:
   - Native Odoo User Tagging: Automatically sends Discuss inbox messages and notification bell alerts with direct access links.
 * **Pre-Configured Out-of-the-Box Hubs:** Ready-to-use business hubs for Sales, CRM, Inventory/Stock, Accounting, Manufacturing (MRP), and Purchase/Procurement with 44+ metric templates.
 * **Real-Time ORM & Performance First:** Sub-second server-side aggregation calculations without redundant data synchronization.
-* **Native Odoo 19 OWL Architecture:** 100% OWL component structure, fully responsive on desktop, tablet, and mobile devices.
+* **Native Odoo 18 OWL Architecture:** 100% OWL component structure, fully responsive on desktop, tablet, and mobile devices.
     """,
     'author': 'ARA SOFT',
     'website': 'https://www.arasoft.id',
